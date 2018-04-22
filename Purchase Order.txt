@@ -1,0 +1,8 @@
+Wire cutter/stripper $15
+Breadboard $16
+2 Solinoid Valve $30-$40 each
+2 Moisture Sensors $10-$15 each
+Soldering Gun $20-$30
+Solder $10
+
+Total: $100-$150
