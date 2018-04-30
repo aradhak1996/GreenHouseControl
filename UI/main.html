@@ -4,82 +4,212 @@
   <html>
 
   <head>
-    <title>Sensor Readings</title>
+    <title>Plant App</title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
-  </head>
 
   <body>
 
     <script src="https://cdn.jsdelivr.net/particle-api-js/5/particle.min.js"></script>
 
-    <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">GreenHouse Boiis</a>
-      </div>
+    <!-- open div loading page -->
+    <!-- ___________________________________________________________________________ -->
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li><a href="#">About</a></li>
-          <li class="Services">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Plants <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Plant 1</a></li>
-              <li><a href="#">Plant 2</a></li>
-              <li><a href="#">Plant 3</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">Manage Plants</a></li>
-            </ul>
-          </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Link</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">Separated link</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
+    <div id="loadingpage" hidden="true">
 
-    <div class="container">
+      <div class="container">
 
-      <div class="jumbotron">
-    
-        <h1>Sensor Readings</h1>
-        <p> Temperature: <span id="TempID">0</span> degrees fahrenheit</p>
-        <p> Photoresistor reading is: <span id="photoID">0</span> </p>
-<<<<<<< HEAD
-        <button type="button" class="btn btn-danger" id="dangerbutton">Danger</button>
-=======
-        <p> Moisture Sensor Reading is : <span id="MoistureID">0</span></p>
->>>>>>> d935de2cd82b3a6c5315d61492ede6b2f1cb76d9
+
+
+          <div id="loadingmessage" align="center">
+            <h3>Please wait while data is fetched from your plant...</h2>
+          </div>
+
+        </div>
+
+    </div>
+
+    <!-- open div main page -->
+    <!-- ____________________________________________________________________________ -->
+
+    <div id="mainpage" hidden="true">
+
+      <div class="container">
+
+        <div class="jumbotron">
+
+          <h1 id="mainpageheader">Your Plant</h1>
+          <br>
+          <img src="imgs/plant.png" height="200" width="50" id="plantpic">
+          <br>
+          <br>
+          <p id="plantstatus">Plant Status:</p>
+          <div id="conditions">
+            <p style="text-align:left;" id="water">
+              Water
+              <span style="float:right;" class="percent"><span id="waterpercent">20%</span></span>
+            </p>
+            <div class="progressBar">
+              <div id="moistureBar"></div>
+            </div>
+
+            <br>
+
+            <p style="text-align:left;" id="water">
+              Light
+              <span style="float:right;" class="percent"><span id="lightpercent">20%</span></span>
+            </p>
+            <div class="progressBar">
+              <div id="lightBar"></div>
+            </div>
+
+            <br>
+
+            <p style="text-align:left;" id="water">
+              Temperature
+              <span style="float:right;" class="percent"><span id="tempvalue">20%</span></span>
+            </p>
+            <div class="progressBar">
+              <div id="tempBar"></div>
+            </div>
+            <br>
+            <br>
+            <button type="button" class="btn btn-danger" id="toadvancedpage">Advanced Controls</button>
+          </div>
+
+          <div id="wateringcondition" hidden="true">
+            <br>
+            <div id="wateringmessage"><h2>WATERING...</h2></div>
+            <br>
+            <h4>Once done watering, the page will reload</h4>
+          </div>
+
+
+
+
+
+
+
+          <!-- <button type="button" class="btn btn-danger" id="openvalve">Open</button>
+          <button type="button" class="btn btn-danger" id="closevalve">Close</button> -->
+
+
+
+        </div>
       </div>
     </div>
-    
+    <!-- Close div main page -->
+    <!-- ___________________________________________________________________________ -->
 
-    
 
-    <script type="text/javascript" src="status.js"></script>
-    
+    <!-- Open div advanced controls page -->
+    <!-- ____________________________________________________________________________ -->
+
+    <div id="advancedcontrols" hidden="true">
+
+      <div class="container">
+
+        <div class="jumbotron">
+
+          <h1 id="advancedpageheader">Advanced Controls</h1>
+          <br>
+          <br>
+          <button type="button" class="btn btn-danger" id="togglebutton">Toggle manual valve control</button>
+          <br>
+          <br>
+          <br>
+          <div id="manualcontrols">
+            <button class="valvebutton" id="openvalve">Open</button>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <button class="valvebutton" id="closevalve">Close</button>
+            <br>
+            <br>
+            <br>
+            <p id="valvetext">Valve: <span id="valvestatus">Closed</span></p>
+
+          </div>
+
+          <div id="mainadvancedcontrols">
+
+            <div id="unitselection">
+
+              <p id="temptitle">Select Temperature Unit</p>
+              <label for="F" class="autoclose">Fahrenheit</label>
+              <input type="radio" name="group2" value="F" id="fahrenheit" checked><br>
+              <label for="C" class="autoclose">Celsius</label>
+              <input type="radio" name="group2" value="C" id="celsius"><br>
+
+            </div>
+
+            <div id="scheme">
+
+              <p id="temptitle">Select Watering Scheme</p>
+              <label for="sch1" class="autoclose">Scheme I</label>
+              <input type="radio" name="group3" value="sch1" id="scheme1" checked><br>
+              <label for="sch2" class="autoclose">Scheme II</label>
+              <input type="radio" name="group3" value="sch2" id="scheme2"><br>
+
+            </div>
+            <br>
+            <br>
+            <button type="button" class="btn btn-danger" id="moreinfo">More info on schemes</button>
+          </div>
+
+
+          <br>
+
+          <button type="button" class="btn btn-danger" id="tomainpage">Back to your plant</button>
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div id="schemepage" hidden = "true">
+
+      <div class="container">
+
+        <div class="jumbotron">
+
+          <h2>Watering Schemes</h2>
+
+          <br>
+
+          <h4>Different plants have different needs. For this reason, two schemes have been developed for watering the
+          plants, as described below. </h4>
+
+          <h3 class="schemetitle">Scheme I</h3>
+          <h5>Scheme I is the default option. It keeps the plants at a more constant moisture level by watering them
+            in smaller increments, and more often. This is a the default option, and ideal for most plants.
+          </h5>
+
+          <h3 class="schemetitle">Scheme II</h3>
+          <h5>Scheme II lets the plant dry out significantly before watering it. Some plants grow better under these conditions.
+            Use this option if you know your plant prefers this type of watering cycle.
+          </h5>
+
+          <br>
+          <br>
+
+          <button type="button" class="btn btn-danger" id="schemetoadv">Back to advanced controls</button>
+
+
+
+        </div>
+      </div>
+    </div>
+
+
+    <script type="text/javascript" src="index.js"></script>
+
     <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 
   </body>
   </html>

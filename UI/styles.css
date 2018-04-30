@@ -1,0 +1,189 @@
+
+
+.jumbotron {
+	/*margin-top: 100px;*/
+  margin: auto;
+  margin-top: 50px;
+  height: 700px;
+  width: 50%;
+  background-color: #f7f2e1;
+}
+
+#plantpic {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 45%;
+}
+
+#mainpageheader {
+  text-align: center;
+  font-size: 35px;
+}
+
+#advancedpageheader {
+  text-align: center;
+  font-size: 35px;
+}
+
+
+
+
+body {
+	background: #46bf89;
+}
+
+.btn-danger {
+	width: 120px;
+	height: 80px;
+}
+
+#toadvancedpage {
+  width: 240px;
+  height: 80px;
+  margin-left: 22%;
+  font-size: 17px;
+}
+
+#tomainpage {
+  width: 240px;
+  height: 80px;
+  margin-left: 22%;
+  font-size: 17px;
+}
+
+#moreinfo {
+  width: 240px;
+  height: 80px;
+  margin-left: 22%;
+  font-size: 17px;
+}
+
+
+.progressBar {
+    border-radius: 10px;
+    width: 75%;
+    background-color: #b8bbc1;
+    height: 12px;
+    margin: auto;
+
+}
+#moistureBar {
+    border-radius: 25px;
+    width: 20%;
+    height: 12px;
+    background-color: #7199e8;
+    /*margin: auto;*/
+}
+
+#lightBar {
+  border-radius: 25px;
+  width: 20%;
+  height: 12px;
+  background-color: #f7b91d;
+}
+
+#tempBar {
+  border-radius: 25px;
+  width: 20%;
+  height: 12px;
+  background-color: #e54444;
+}
+
+#water {
+  margin: 0;
+  padding-bottom: 1px;
+  padding-left: 13%;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.percent {
+  margin: 0;
+  padding-right: 13%;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+#plantstatus {
+  font-size: 18px;
+  font-weight: 400;
+  text-align:center;
+  padding: 0;
+  margin: 0;
+}
+
+#loadingmessage {
+  margin-top: 40%;
+  text-align:center;
+}
+
+#wateringcondition {
+  text-align:center;
+}
+
+#wateringmessage {
+  font-weight: 700;
+}
+
+.valvebutton{
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 17px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  width: 120px;
+  height: 110px;
+  padding-right: 20px;
+}
+
+.valvebutton:hover {background-color: #3e8e41}
+
+.valvebutton:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+#togglebutton {
+  width: 300px;
+  height: 55px;
+  margin-left: 16%;
+  font-size: 17px;
+}
+
+#manualcontrols {
+  text-align: center;
+}
+
+#valvetext {
+  font-weight: 700;
+}
+
+/*#unitselection {
+  text-align:center;
+}*/
+
+#temptitle {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.schemetitle {
+  font-weight: 650;
+}
+
+#schemetoadv {
+  width: 240px;
+  height: 80px;
+  margin-left: 22%;
+  font-size: 17px;
+}

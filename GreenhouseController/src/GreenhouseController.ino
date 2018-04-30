@@ -17,10 +17,10 @@ int moisturePower2 = D1;
 int moisturePower3 = D2;
 int photoPower = D3;
 int photoPin = A3;
-OneWire ds = OneWire(D4);  // 1-wire signal on pin D4 for temperature sensor
+OneWire ds = OneWire(D5);  // 1-wire signal on pin D4 for temperature sensor
 
 //Variables for rolling avg
-const int numReadings = 20;
+const int numReadings = 25;
 
 int readings[numReadings];      // the readings from the analog input
 int readIndex = 0;              // the index of the current reading
@@ -37,12 +37,17 @@ float celsius, fahrenheit;
 
 //Miscellaneous global variables
 float avgMoisture;
-int actuationThreshold = 2900;
+int actuationThreshold = 2350;
 int isWatering = false;
 int wetThreshold = 2100;
 bool isComplete;
 unsigned long lastUpdate = 0;
 float lastTemp;
+
+// //Particle variables for getting each moisture sensor's reading
+// int moistureVal1;
+// int moistureVal2;
+// int moistureVal3;
 
 
 
@@ -51,6 +56,11 @@ void setup() {
     Serial.begin(9600);
     Particle.function("actuate", actuate);
     Particle.function("getState", getState);
+    Particle.function("setDry", setHighThreshold);
+    Particle.function("setWet", setLowThreshold);
+    // Particle.variable("moisture1", moistureVal1);
+    // Particle.variable("moisture2", moistureVal2);
+    // Particle.variable("moisture3", moistureVal3);
     setupHardware();
     timerStart();
     Particle.subscribe("moisture", actuationController);
@@ -66,9 +76,10 @@ void setup() {
 // If it is greater than the threshold, isWatering is set to true, and the actuation system starts running
 void actuationController(const char *event, const char *data){
   String reading = String(data);
-  int soilValue = reading.toInt();
+  float soilValue = reading.toFloat();
   Serial.println(soilValue);
   if(soilValue >= actuationThreshold){
+    Particle.publish("wateringStatus", "started");
     actuate("open");
     // Initialize the rolling average array to be all zeros, isComplete to false, and isWatering to true to start the
     // actuation controller.
@@ -212,17 +223,17 @@ void publishState(){
   int sensorVal3 = analogRead(moistureSensor3);
   avgMoisture = takeAverage(sensorVal1, sensorVal2, sensorVal3);
   // String publishVal = String(avgMoisture);
-  String publishVal = String(sensorVal1);
-  String temperatureVal = getTemperature();
-  int lightIntensity = getLightIntensity();
+  String publishVal = String(avgMoisture);
+  // String temperatureVal = getTemperature();
+  // int lightIntensity = getLightIntensity();
   Particle.publish("moisture", publishVal);
-  Particle.publish("temperature", temperatureVal);
-  Particle.publish("light", String(lightIntensity));
+  // Particle.publish("temperature", temperatureVal);
+  // Particle.publish("light", String(lightIntensity));
 
 }
 
 
-Timer timer(6000, publishState);
+Timer timer(60000, publishState);
 
 //Start the timer
 void timerStart(){
@@ -232,7 +243,7 @@ void timerStart(){
 //Take an average of 3 numbers
 float takeAverage(int val1, int val2, int val3){
   int sum = val1 + val2 + val3;
-  float average = sum/3;
+  float average = sum/3.0;
   return average;
 }
 
@@ -273,6 +284,18 @@ int actuate(String command){
     }
 }
 
+int setHighThreshold(String command){
+  int val = command.toInt();
+  actuationThreshold = val;
+  Particle.publish("Actuation thresh change", String(actuationThreshold));
+}
+
+int setLowThreshold(String command){
+  int val = command.toInt();
+  wetThreshold = val;
+  Particle.publish("Wet thresh change", String(wetThreshold));
+}
+
 
 // Though the loop is running constantly, the only time any code will run is when the plant is being watered.
 // This is because the only time we need to take readings at the maximum possible rate is when the plant is being watered,
@@ -280,7 +303,13 @@ int actuate(String command){
 // sufficiently watered. Once the plant is healthy, no code is being run by the loop, and it is effectively blank.
 void loop() {
 
+  // int moistureVal1 = analogRead(moistureSensor1);
+  // int moistureVal2 = analogRead(moistureSensor2);
+  // int moistureVal3 = analogRead(moistureSensor3);
+
   if(isWatering){
+
+    // Serial.println("currently watering");
 
 
     powerSensors();
@@ -325,7 +354,7 @@ void loop() {
         valveOff();
         unPowerSensors();
         isWatering = false;
-        Particle.publish("status", "stopped");
+        Particle.publish("wateringStatus", "stopped");
       }
     }
 
@@ -337,6 +366,10 @@ void loop() {
     //Delay to compensate for randomness
     delay(1);
 
+  }
+
+  else {
+    valveOff();
   }
   // actuate("open");
 
